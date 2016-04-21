@@ -1,0 +1,38 @@
+body {
+    height: 100 % ;
+    margin: 0;
+    padding: 0;
+    font - family: 'Montserrat',
+    sans - serif;
+    font - weight: 200;
+    font - size: 1e m;
+}
+
+/*Position and the size of map*/
+#
+map {
+    height: 700 px;
+    overflow: visible;
+}
+
+/*Static div for filter list to prevent resizing when list shortens*/
+#
+filter {
+    padding - top: 25 px;
+}
+
+/*Static div for filter list to prevent resizing when list shortens*/
+#
+list - view {
+    height: 125 px;
+}
+
+/*Change cursor to show list is active and can be clicked*/
+#
+listItems {
+    cursor: pointer;
+}
+@media screen and(min - width: 600 px) {
+        .responsive - menu {
+            display: block;
+        }
