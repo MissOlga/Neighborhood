@@ -1,4 +1,9 @@
-html, body {
+html {
+	height: 100% ;
+    margin: 0;
+    padding: 0;
+}
+body {
     height: 100% ;
     margin: 0;
     padding: 0;
@@ -12,7 +17,7 @@ html, body {
 }
 
 /*Static div for filter list to prevent resizing when list shortens*/
-#filter {
+.filter {
     padding-top: 25px;
 }
 
