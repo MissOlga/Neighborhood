@@ -142,6 +142,10 @@ function initMap () {
           //Wikipedia API request URL
           var wikiUrl = "http://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=" + alteredName + "&limit=1&redirects=return&format=json";
 
+          var wikiRequestTimeout = setTimeout(function(){
+           $wikiElem.text("failed to get Wikipedia articles");
+          }, 8000);
+
           //AJAX request for Wikipedia API information used in infowindows
           $.ajax ({
             url: wikiUrl,
@@ -162,15 +166,15 @@ function initMap () {
               //If no article is found, populate infowindow with content string reflecting no articles were found
               } else {
                 contentString = '<div id="content">' + windowNames + '<p>' + windowAddresses + '</p>' + '<p>' + 'No articles found on Wikipedia'+ '</p>' + '</div>';
-                console.log(wikiUrl);
                 infoWindow.setContent(contentString);
               }
             }
           //Communicate error when Wikipedia API is unable to be reached or is not available
-          }).error(function(e){
+          }).fail(function(e){
             contentString = '<div id="content">' + windowNames + '<p>' + windowAddresses + '</p>' + '<p>' + 'Failed to reach Wikipedia'+ '</p>' + '</div>';
             infoWindow.setContent(contentString);
           });
+          clearTimeout(wikiRequestTimeout);
       //Call to open the infowindow
       console.log("clicked");
       infoWindow.open(map, this);
@@ -217,4 +221,4 @@ function initMap () {
 
 //Call the AppViewModel function
 ko.applyBindings(new AppViewModel());
-};;
+}
