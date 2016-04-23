@@ -1,13 +1,15 @@
 html {
-	height: 100% ;
+	height: 100%;
     margin: 0;
     padding: 0;
 }
+
 body {
-    height: 100% ;
+    height: 100%;
     margin: 0;
     padding: 0;
 }
+
 
 /*Position and the size of map*/
 #map {
@@ -30,3 +32,6 @@ body {
 #listItems {
     cursor: pointer;
 }
+
+overflow: scroll;
+-webkit-overflow-scrolling: touch;
