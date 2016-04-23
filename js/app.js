@@ -58,23 +58,25 @@ var Place = function (data) {
 ////**View Model**////
 
 //Set global variables for map functions
-var map;
-var infoWindow;
-var marker;
+//simplified piece of code
+var map="map",
+    infoWindow="infoWindow",
+    marker="marker";
 
 //Create callback function for Google map async load
 function initMap () {
 //Create View Model main function
-var AppViewModel = function () {
+    var AppViewModel = function () {
 
   //Function to assist with filteredPlaces list by checking the beginning of string searched
-  var stringStartsWith = function (string, startsWith) {
-    string = string || "";
-    if (startsWith.length > string.length) {
+        var stringStartsWith = function (string, startsWith) {
+        string = string || "";
+        if (startsWith.length > string.length) {
         return false;
-    }
-    return string.substring(0, startsWith.length) === startsWith;
-  };
+        }
+        return string.substring(0, startsWith.length) === startsWith;
+        };
+
 
   //Variable to keep references of "this" inside the View Model
   var self = this;
@@ -112,13 +114,13 @@ var AppViewModel = function () {
     //Add bounce animation to markers when clicked or selected from list
     placeItem.marker.addListener('click', toggleBounce);
 
-//bounce markers on click, end after 3.5sec
+//number of bounces-2
     function toggleBounce() {
       if (placeItem.marker.getAnimation() !== null) {
         placeItem.marker.setAnimation(null);
       } else {
         placeItem.marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function(){ placeItem.marker.setAnimation(null); }, 3500);
+        setTimeout(function(){ placeItem.marker.setAnimation(null); }, 1400);
       }
     }
 
@@ -138,7 +140,7 @@ var AppViewModel = function () {
           var alteredName = encodeURI(placeItem.name);
 
           //Wikipedia API request URL
-          var wikiUrl = "http://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=" + alteredName + "&limit=1&redirects=return&format=json"
+          var wikiUrl = "http://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=" + alteredName + "&limit=1&redirects=return&format=json";
 
           //AJAX request for Wikipedia API information used in infowindows
           $.ajax ({
@@ -151,21 +153,22 @@ var AppViewModel = function () {
                 for (var i=0; i<articleList.length; i++) {
                   articleStr = articleList[i];
                   var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-                  contentString = '<div id="content">' + windowNames + '<p>' + windowAddresses + '</p>' + '<p>' + response[2] + '</p>' + '<a href=" ' + url + '">' + url + '</a>' + '</div>'
+                  //Now reference opens in a new tab
+                  contentString = '<div id="content">' + windowNames + '<p>' + windowAddresses + '</p>' + '<p>' + response[2] + '</p>' + '<a href=" ' + url + '" target="_blank">' + url + '</a>' + '</div>';
                   infoWindow.setContent(contentString);
                   console.log(response);
                 }
                 console.log(wikiUrl);
               //If no article is found, populate infowindow with content string reflecting no articles were found
               } else {
-                contentString = '<div id="content">' + windowNames + '<p>' + windowAddresses + '</p>' + '<p>' + 'No articles found on Wikipedia'+ '</p>' + '</div>'
+                contentString = '<div id="content">' + windowNames + '<p>' + windowAddresses + '</p>' + '<p>' + 'No articles found on Wikipedia'+ '</p>' + '</div>';
                 console.log(wikiUrl);
                 infoWindow.setContent(contentString);
               }
             }
           //Communicate error when Wikipedia API is unable to be reached or is not available
           }).error(function(e){
-            contentString = '<div id="content">' + windowNames + '<p>' + windowAddresses + '</p>' + '<p>' + 'Failed to reach Wikipedia'+ '</p>' + '</div>'
+            contentString = '<div id="content">' + windowNames + '<p>' + windowAddresses + '</p>' + '<p>' + 'Failed to reach Wikipedia'+ '</p>' + '</div>';
             infoWindow.setContent(contentString);
           });
       //Call to open the infowindow
@@ -196,15 +199,16 @@ var AppViewModel = function () {
         return ko.utils.arrayFilter(self.markerArray(), function(placeItem) {
           is_filtered = stringStartsWith(placeItem.name.toLowerCase(), filter);
           //Show markers that match the search value and return list items that match the search value
+          var is_filtered;
            if (is_filtered) {
               placeItem.marker.setVisible(true);
               console.log("clicked");
-              return is_filtered
+              return is_filtered;
             }
           //Hide markers that do not match the search value
            else {
               placeItem.marker.setVisible(false);
-              return is_filtered
+              return is_filtered;
             }
         });
       }
@@ -213,4 +217,4 @@ var AppViewModel = function () {
 
 //Call the AppViewModel function
 ko.applyBindings(new AppViewModel());
-};
+};;
