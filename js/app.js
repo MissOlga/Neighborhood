@@ -1,4 +1,5 @@
-//my list of places
+ "use strict"
+ // MODEL
 var initialMarkers = [
   {
     name: 'Twitter',
@@ -143,7 +144,7 @@ function initMap () {
           var wikiUrl = "http://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=" + alteredName + "&limit=1&redirects=return&format=json";
 
           var wikiRequestTimeout = setTimeout(function(){
-           $wikiElem.text("failed to get Wikipedia articles");
+           alert("failed to get Wikipedia articles");
           }, 8000);
 
           //AJAX request for Wikipedia API information used in infowindows
@@ -155,11 +156,12 @@ function initMap () {
               //If an article is found, populate infowindow with content string information showing Wikipedia response
               if (articleList.length > 0) {
                 for (var i=0; i<articleList.length; i++) {
-                  articleStr = articleList[i];
+                  var articleStr = articleList[i];
                   var url = 'http://en.wikipedia.org/wiki/' + articleStr;
                   //Now reference opens in a new tab
                   contentString = '<div id="content">' + windowNames + '<p>' + windowAddresses + '</p>' + '<p>' + response[2] + '</p>' + '<a href=" ' + url + '" target="_blank">' + url + '</a>' + '</div>';
                   infoWindow.setContent(contentString);
+                  clearTimeout(wikiRequestTimeout);
                   console.log(response);
                 }
                 console.log(wikiUrl);
@@ -174,7 +176,6 @@ function initMap () {
             contentString = '<div id="content">' + windowNames + '<p>' + windowAddresses + '</p>' + '<p>' + 'Failed to reach Wikipedia'+ '</p>' + '</div>';
             infoWindow.setContent(contentString);
           });
-          clearTimeout(wikiRequestTimeout);
       //Call to open the infowindow
       console.log("clicked");
       infoWindow.open(map, this);
