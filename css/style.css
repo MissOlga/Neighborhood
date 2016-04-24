@@ -32,6 +32,3 @@ body {
 #listItems {
     cursor: pointer;
 }
-
-overflow: scroll;
--webkit-overflow-scrolling: touch;
